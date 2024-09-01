@@ -210,3 +210,141 @@ Se inicializa una variable puntaje al principio del juego para llevar un registr
 El puntaje comienza en 100 y se penaliza con 10 puntos por cada intento fallido.
 Se actualiza el puntaje en cada iteración del bucle (while) si el jugador falla un intento.
 Se imprime el puntaje final al final del juego.
+
+OTRO ANEXO 
+
+```py
+def mostrar_horcas(intentos: int):
+    """Muestra la figura del ahorcado basada en el número de intentos fallidos."""
+    etapas = [
+        """
+         ------
+         |    |
+              |
+              |
+              |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+              |
+              |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+         |    |
+              |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|    |
+              |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\\   |
+              |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\\   |
+        /     |
+              |
+        =========
+        """,
+        """
+         ------
+         |    |
+         O    |
+        /|\\   |
+        / \\   |
+              |
+        =========
+        """
+    ]
+    print(etapas[intentos])
+
+def adivinar_palabra(p_org=list, p_obs=list, palabra=str, letras_erroneas=list) -> int:
+    i: int = 0
+    puntaje: int = 100  # Puntaje inicial
+
+    while i < 6:  # Número total de intentos fallidos permitidos
+        mostrar_horcas(i)
+        
+        # Mostrar la línea con las letras adivinadas y los guiones bajos para las letras restantes
+        p_obs1 = " ".join(p_obs)
+        print(f"Línea actual: {p_obs1}")
+        
+        print(f"Intentos restantes: {6 - i}")
+        print(f"Letra(s) errónea(s): {', '.join(letras_erroneas)}")
+        
+        a = input("Escriba una letra: ").lower()
+        
+        if a in palabra:
+            for e in range(len(palabra)):
+                if a == p_org[e]:
+                    p_obs[e] = a
+        else:
+            i += 1
+            if a not in letras_erroneas:
+                letras_erroneas.append(a)
+        
+        if p_org == p_obs:
+            break
+        
+        # Penaliza el puntaje por cada intento fallido
+        puntaje -= 10
+    
+    mostrar_horcas(i)  # Muestra el estado final del ahorcado
+    
+    print(f"Línea final: {' '.join(p_obs)}")
+    
+    if p_org == p_obs:
+        resultado = 1
+    else:
+        resultado = 0
+
+    return resultado, puntaje
+
+if __name__ == "__main__":
+    # Palabra para jugar (modificada a "computador")
+    palabra = "computador"
+    
+    # Listas para la función
+    p_org = []
+    p_obs = []
+    letras_erroneas = []
+    
+    # Asignación de elementos contenidos en listas
+    for i in range(len(palabra)):
+        p_org.append(palabra[i])
+        p_obs.append("__")
+
+    resultado, puntaje = adivinar_palabra(p_org, p_obs, palabra, letras_erroneas)
+
+    if resultado == 1:
+        print("GANASTE")
+    else:
+        print("GAME OVER")
+
+    print(f"Tu puntaje es: {puntaje}")
+```
