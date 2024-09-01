@@ -24,11 +24,12 @@ graph TD;
       Agregar letra a lista de errores)
   H-->J{¿Está la palabra completa?}
   J-->|si|K(Imprimir GANASTE de una manera cool 😎)
-  K-->L(FIN)
+  K-->L(Calcular puntaje)
   J-->|no|F
   I-->N{¿Está el dibujo terminado?}
   N-->|si|M(Imprimir ☠️ GAME OVER ☠️)
   M-->L
   N-->|no|F
+  L-->O(FIN)
 
 ```
