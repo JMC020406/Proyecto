@@ -203,9 +203,10 @@ if __name__ == "__main__":
 Explicación de las modificaciones:
 
 Cuenta regresiva:
-Se muestra el número de intentos restantes en cada iteración del bucle while usando print(f"Intentos restantes: {12 - i}").
+Se muestra el número de intentos restantes en cada iteración del bucle while usando (print(f"Intentos restantes: {12 - i}").)
 
 Manejo de puntajes:
-Se inicializa un puntaje en 100.
-El puntaje se reduce en 10 por cada intento fallido.
-Al final, se imprime el puntaje final después de determinar si el jugador ganó o perdió.
+Se inicializa una variable puntaje al principio del juego para llevar un registro del puntaje del jugador.
+El puntaje comienza en 100 y se penaliza con 10 puntos por cada intento fallido.
+Se actualiza el puntaje en cada iteración del bucle (while) si el jugador falla un intento.
+Se imprime el puntaje final al final del juego.
