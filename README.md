@@ -18,8 +18,7 @@ graph TD;
   D-->F
   E-->F(Ingresar letras por teclado)
   F-->G{¿Está esa letra en la palabra?}
-  G-->|si|H(Imprimir palabra actualizada
-      Agregar letra a lista de correctas)
+  G-->|si|H(Imprimir palabra actualizada)
   G-->|no|I(Actualizar dibujo de ahorcado
       Agregar letra a lista de errores)
   H-->J{¿Está la palabra completa?}
