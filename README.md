@@ -86,3 +86,54 @@ Derrota: GAME OVER ☠️
 #### 8.Fin del juego
 
 FIN
+
+```py
+def adivinar_palabra (p_org=list, p_obs=list, palabra=str, letras_erroneas=list)->int:
+
+    i : int = 0
+   
+    while i < 12:
+        p_obs1 = " ".join(p_obs)
+        print (p_obs1)
+        a = (input("Escriba una letra: "))
+        if a in palabra:
+            for e in range (len(palabra)):
+                if a == p_org[e]:
+                    p_obs[e] = a
+        else:
+            i += 1
+        if p_org == p_obs:
+            break
+    print (p_obs1)
+    if p_org == p_obs:
+        resultado = 1
+    else:
+        resultado = 0
+
+    return resultado
+
+
+if __name__ == "__main__":
+    # Palabra para jugar
+    palabra = input("Ingrese la palabra en minúsculas para jugar: ")
+    #Listas para la función
+    p_org = []
+    p_obs = []
+    letras_erroneas = []
+    #Asignación de elementos contenidos en listas
+    for i in range (len(palabra)):
+        p_org.append (palabra[i])
+        p_obs.append ("__")
+
+resultado = adivinar_palabra(p_org, p_obs, palabra)
+
+
+if resultado == 1:
+    print ("GANASTE")
+else:
+    print("GAME OVER")
+```
+cosas faltantes:
+tiempo
+lista de letras erroneas que se ingresen
+puntaje
