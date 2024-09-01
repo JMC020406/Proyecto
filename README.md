@@ -137,3 +137,75 @@ cosas faltantes:
 tiempo
 lista de letras erroneas que se ingresen
 puntaje
+
+#### ANEXOS AL CODIGO
+
+```py
+def adivinar_palabra(p_org=list, p_obs=list, palabra=str, letras_erroneas=list) -> int:
+    i: int = 0
+    puntaje: int = 100  # Puntaje inicial
+
+    while i < 12:
+        p_obs1 = " ".join(p_obs)
+        print(p_obs1)
+        print(f"Intentos restantes: {12 - i}")
+        print(f"Letra(s) errónea(s): {', '.join(letras_erroneas)}")
+        
+        a = input("Escriba una letra: ").lower()
+        
+        if a in palabra:
+            for e in range(len(palabra)):
+                if a == p_org[e]:
+                    p_obs[e] = a
+        else:
+            i += 1
+            if a not in letras_erroneas:
+                letras_erroneas.append(a)
+        
+        if p_org == p_obs:
+            break
+        
+        # Penaliza el puntaje por cada intento fallido
+        puntaje -= 10
+    
+    print(" ".join(p_obs))
+    
+    if p_org == p_obs:
+        resultado = 1
+    else:
+        resultado = 0
+
+    return resultado, puntaje
+
+if __name__ == "__main__":
+    # Palabra para jugar
+    palabra = input("Ingrese la palabra en minúsculas para jugar: ").lower()
+    
+    # Listas para la función
+    p_org = []
+    p_obs = []
+    letras_erroneas = []
+    
+    # Asignación de elementos contenidos en listas
+    for i in range(len(palabra)):
+        p_org.append(palabra[i])
+        p_obs.append("__")
+
+    resultado, puntaje = adivinar_palabra(p_org, p_obs, palabra, letras_erroneas)
+
+    if resultado == 1:
+        print("GANASTE")
+    else:
+        print("GAME OVER")
+
+    print(f"Tu puntaje es: {puntaje}")
+```
+Explicación de las modificaciones:
+
+Cuenta regresiva:
+Se muestra el número de intentos restantes en cada iteración del bucle while usando print(f"Intentos restantes: {12 - i}").
+
+Manejo de puntajes:
+Se inicializa un puntaje en 100.
+El puntaje se reduce en 10 por cada intento fallido.
+Al final, se imprime el puntaje final después de determinar si el jugador ganó o perdió.
