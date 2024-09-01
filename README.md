@@ -365,3 +365,123 @@ Visualización del Ahorcado y Línea de Palabra: La función ahora muestra la l�
 Palabra Predeterminada: Se ha fijado la palabra a adivinar como "computador" en lugar de solicitarla al usuario.
 
 Puntaje: Se muestra el puntaje final al final del juego.
+
+
+ULTIMA ACTUALIZACION
+
+```py
+import tkinter as tk
+
+class AhorcadoApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Juego del Ahorcado")
+
+        self.palabra = "computador"
+        self.p_org = [char for char in self.palabra]
+        self.p_obs = ["__" for _ in self.palabra]
+        self.letras_erroneas = []
+        self.intentos = 0
+        self.puntaje = 100
+
+        # Configuración del lienzo para el dibujo del ahorcado
+        self.canvas = tk.Canvas(root, width=200, height=200, bg="white")
+        self.canvas.pack()
+        self.dibujar_horcas()
+
+        # Configuración de la interfaz
+        self.palabra_label = tk.Label(root, text=" ".join(self.p_obs), font=("Courier", 14))
+        self.palabra_label.pack()
+
+        self.intentos_label = tk.Label(root, text=f"Intentos restantes: {6 - self.intentos}", font=("Courier", 14))
+        self.intentos_label.pack()
+
+        self.letras_erroneas_label = tk.Label(root, text="Letra(s) errónea(s): ", font=("Courier", 14))
+        self.letras_erroneas_label.pack()
+
+        self.entrada = tk.Entry(root)
+        self.entrada.pack()
+
+        self.adivinar_button = tk.Button(root, text="Adivinar", command=self.adivinar)
+        self.adivinar_button.pack()
+
+    def adivinar(self):
+        letra = self.entrada.get().lower()
+        if letra in self.palabra:
+            for idx, char in enumerate(self.palabra):
+                if letra == char:
+                    self.p_obs[idx] = letra
+        else:
+            if letra not in self.letras_erroneas:
+                self.letras_erroneas.append(letra)
+                self.intentos += 1
+                self.puntaje -= 10
+                self.dibujar_horcas()
+        
+        self.actualizar_interfaz()
+        
+        if self.p_org == self.p_obs:
+            self.mostrar_resultado("GANASTE")
+        elif self.intentos >= 6:
+            self.mostrar_resultado("GAME OVER")
+
+    def dibujar_horcas(self):
+        self.canvas.delete("all")
+        
+        # Dibujo del ahorcado en función de los intentos fallidos
+        if self.intentos > 0:
+            # Base y poste
+            self.canvas.create_line(50, 150, 150, 150, width=2)
+            self.canvas.create_line(70, 150, 70, 50, width=2)
+            self.canvas.create_line(70, 50, 120, 50, width=2)
+            self.canvas.create_line(120, 50, 120, 80, width=2)
+        
+        if self.intentos > 1:
+            # Cabeza
+            self.canvas.create_oval(100, 80, 140, 120, outline="black", width=2)
+        
+        if self.intentos > 2:
+            # Cuerpo
+            self.canvas.create_line(120, 120, 120, 150, width=2)
+        
+        if self.intentos > 3:
+            # Brazo izquierdo
+            self.canvas.create_line(120, 130, 100, 110, width=2)
+        
+        if self.intentos > 4:
+            # Brazo derecho
+            self.canvas.create_line(120, 130, 140, 110, width=2)
+        
+        if self.intentos > 5:
+            # Pierna izquierda
+            self.canvas.create_line(120, 150, 100, 170, width=2)
+        
+        if self.intentos > 6:
+            # Pierna derecha
+            self.canvas.create_line(120, 150, 140, 170, width=2)
+
+    def actualizar_interfaz(self):
+        self.palabra_label.config(text=" ".join(self.p_obs))
+        self.intentos_label.config(text=f"Intentos restantes: {6 - self.intentos}")
+        self.letras_erroneas_label.config(text=f"Letra(s) errónea(s): {', '.join(self.letras_erroneas)}")
+
+    def mostrar_resultado(self, mensaje):
+        resultado_ventana = tk.Toplevel(self.root)
+        resultado_ventana.title("Resultado")
+        
+        resultado_label = tk.Label(resultado_ventana, text=f"{mensaje}. Tu puntaje final es: {self.puntaje}", font=("Courier", 14))
+        resultado_label.pack(padx=20, pady=20)
+        
+        cerrar_button = tk.Button(resultado_ventana, text="Cerrar", command=self.root.quit)
+        cerrar_button.pack(pady=10)
+
+        # Desactiva la entrada y el botón de adivinanza
+        self.entrada.config(state="disabled")
+        self.adivinar_button.config(state="disabled")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = AhorcadoApp(root)
+    root.mainloop()
+
+```
