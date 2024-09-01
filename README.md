@@ -307,12 +307,10 @@ def adivinar_palabra(p_org=list, p_obs=list, palabra=str, letras_erroneas=list) 
             i += 1
             if a not in letras_erroneas:
                 letras_erroneas.append(a)
-        
+             puntaje -= 10 # Penaliza el puntaje por cada intento fallido
+
         if p_org == p_obs:
             break
-        
-        # Penaliza el puntaje por cada intento fallido
-        puntaje -= 10
     
     mostrar_horcas(i)  # Muestra el estado final del ahorcado
     
