@@ -32,3 +32,57 @@ graph TD;
   L-->O(FIN)
 
 ```
+### Explicacion del diagrama de flujo
+
+#### 1. Inicio del juego
+- INICIO
+
+#### 2. Número de jugadores
+
+- Seleccionar número de jugadores
+1 jugador
+2 jugadores
+
+#### 3.Elegir dificultad
+Elegir dificultad del juego
+
+- Baja
+- Intermedia
+- Alta
+
+#### 4. Seleccionar o ingresar la palabra
+
+- Para 1 jugador: Seleccionar palabra del diccionario
+
+- Para 2 jugadores: Ingresar la palabra
+
+#### 5. Ingresar letras
+
+- Ingresar letras por teclado
+
+#### 6. Verificación de letras
+
+Comprobar si la letra está en la palabra
+
+Sí
+Actualizar palabra mostrada
+Verificar si la palabra está completa
+Sí: Mostrar mensaje de victoria y calcular puntaje
+No: Continuar ingresando letras
+No
+Actualizar dibujo del ahorcado y lista de errores
+Verificar si el dibujo del ahorcado está completo
+
+#### - Sí: Mostrar mensaje de derrota y calcular puntaje
+
+#### - No: Continuar ingresando letras
+
+#### 7.Mensajes finales y puntaje
+
+Mostrar mensaje final y calcular puntaje
+Victoria: GANASTE 😎
+Derrota: GAME OVER ☠️
+
+#### 8.Fin del juego
+
+FIN
