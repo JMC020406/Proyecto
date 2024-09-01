@@ -348,3 +348,22 @@ if __name__ == "__main__":
 
     print(f"Tu puntaje es: {puntaje}")
 ```
+Cambios Realizados
+
+1. Incorporación del Ahorcado:
+
+Función mostrar_horcas: Se ha agregado una nueva función llamada mostrar_horcas para mostrar la representación gráfica del ahorcado según el número de intentos fallidos. Esta función imprime diferentes etapas del ahorcado (de la base hasta el muñeco completo). 
+
+2. Actualización de la Función adivinar_palabra:
+
+Número de Intentos: Se ha cambiado el número de intentos permitidos a 6, en lugar de 12.
+
+Puntaje: Se ha añadido un sistema de puntajes que disminuye con cada intento fallido.
+
+Visualización del Ahorcado y Línea de Palabra: La función ahora muestra la línea con los caracteres adivinados y el estado actual del ahorcado en cada iteración.
+
+3. Actualización en el Bloque Principal (__main__):
+
+Palabra Predeterminada: Se ha fijado la palabra a adivinar como "computador" en lugar de solicitarla al usuario.
+
+Puntaje: Se muestra el puntaje final al final del juego.
