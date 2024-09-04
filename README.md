@@ -64,11 +64,11 @@ Elegir dificultad del juego
 
 Comprobar si la letra está en la palabra
 
-Sí
-Actualizar palabra mostrada
-Verificar si la palabra está completa
-Sí: Mostrar mensaje de victoria y calcular puntaje
-No: Continuar ingresando letras
+Sí:
+Actualizar palabra mostrada, 
+Verificar si la palabra está completa,
+Sí: Mostrar mensaje de victoria y calcular puntaje.
+No: Continuar ingresando letras.
 No
 Actualizar dibujo del ahorcado y lista de errores
 Verificar si el dibujo del ahorcado está completo
