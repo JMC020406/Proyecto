@@ -9,366 +9,343 @@ El diagrama de flujo nos ayudara a dimensionar cual es el objetivo que debemos a
 
 ```mermaid
 graph TD;
-  A(INICIO) --> B{¿Cuantos jugadores?}
-  B-->|1 jugador|C{¿Que dificultad jugara?}
-  B-->|2 jugadores|E(Ingresar la palabra)
-  C-->|baja|D(Sacar palabra de un diccionario)
-  C-->|intermedia|D
-  C-->|alta|D
-  D-->F
-  E-->F(Ingresar letras por teclado)
-  F-->G{¿Está esa letra en la palabra?}
-  G-->|si|H(Imprimir palabra actualizada)
-  G-->|no|I(Actualizar dibujo de ahorcado
-      Agregar letra a lista de errores)
-  H-->J{¿Está la palabra completa?}
-  J-->|si|K(Imprimir GANASTE de una manera cool 😎)
-  K-->L(Calcular puntaje)
-  J-->|no|F
-  I-->N{¿Está el dibujo terminado?}
-  N-->|si|M(Imprimir ☠️ GAME OVER ☠️)
-  M-->L
-  N-->|no|F
-  L-->O(FIN)
+  A(INICIO) --> B{¿Cuántos jugadores?}
+  B-->|1 jugador|C{¿Qué dificultad jugará?}
+  B-->|2 jugadores|E(Iniciar multijugador)
+  
+  C-->|fácil|D(Sacar palabra de un diccionario)
+  C-->|medio|D
+  C-->|difícil|D
+  
+  D-->F{¿Qué idioma?}
+  F-->|español|G(Sacar palabra en español)
+  F-->|inglés|G(Sacar palabra en inglés)
+  F-->|francés|G(Sacar palabra en francés)
+  F-->|alemán|G(Sacar palabra en alemán)
+
+  G-->H(Ingresar letras por teclado)
+  E-->H
+
+  H-->I{¿Está esa letra en la palabra?}
+  I-->|sí|J(Imprimir palabra actualizada)
+  I-->|no|K(Actualizar dibujo de ahorcado<br>Agregar letra a lista de errores)
+
+  J-->L{¿Está la palabra completa?}
+  L-->|sí|M(Imprimir GANASTE de una manera cool 😎)
+  M-->N(Calcular puntaje)
+  L-->|no|H
+
+  K-->O{¿Está el dibujo terminado?}
+  O-->|sí|P(Imprimir ☠️ GAME OVER ☠️)
+  P-->N
+  O-->|no|H
+  
+  N-->Q(FIN)
 
 ```
-### Explicacion del diagrama de flujo
+## Explicación del diagrama de flujo
 
-#### 1. Inicio del juego
-- INICIO
+### 1. Inicio del juego
 
-#### 2. Número de jugadores
+INICIO: El juego comienza.
 
-- Seleccionar número de jugadores
-1 jugador
-2 jugadores
+### 2. Número de jugadores
+¿Cuántos jugadores?: Se pregunta cuántos jugadores participarán en el juego.
+- 1 jugador: Si hay un solo jugador, se procede a elegir la dificultad.
+- 2 jugadores: Si hay dos jugadores, se inicia la modalidad multijugador.
 
-#### 3.Elegir dificultad
-Elegir dificultad del juego
+### 3. Elegir dificultad
+¿Qué dificultad jugará?: Si hay un solo jugador, se le pregunta sobre la dificultad del juego.
 
-- Baja
-- Intermedia
-- Alta
+- fácil: La dificultad se establece en fácil, y se sacará una palabra de un diccionario.
+- medio: La dificultad se establece en medio, y se sacará una palabra de un diccionario.
+- difícil: La dificultad se establece en difícil, y se sacará una palabra de un diccionario.
 
-#### 4. Seleccionar o ingresar la palabra
+  ### 4. Elegir idioma
+  Hay 4 opciones de idioma para la palabra que se va a adivinar
+-Español
+-Ingles
+-Frances
+-Aleman
+  
 
-- Para 1 jugador: Seleccionar palabra del diccionario
+### 5. Seleccionar palabra
+Sacar palabra de un diccionario: Se selecciona una palabra del diccionario según la dificultad elegida.
 
-- Para 2 jugadores: Ingresar la palabra
+- Iniciar multijugador: Los dos jugadores ingresan la palabra.
 
-#### 5. Ingresar letras
+### 6. Ingresar letras
+- Ingresar letras por teclado: Los jugadores comienzan a ingresar letras en un intento de adivinar la palabra.
 
-- Ingresar letras por teclado
+### 7. Verificación de letras
 
-#### 6. Verificación de letras
-
-Comprobar si la letra está en la palabra
+- ¿Está esa letra en la palabra?: Se verifica si la letra ingresada está en la palabra.
 
 Sí:
-Actualizar palabra mostrada, 
-Verificar si la palabra está completa,
-Sí: Mostrar mensaje de victoria y calcular puntaje.
-No: Continuar ingresando letras.
-No
-Actualizar dibujo del ahorcado y lista de errores
-Verificar si el dibujo del ahorcado está completo
 
-#### - Sí: Mostrar mensaje de derrota y calcular puntaje
+Imprimir palabra actualizada: Se actualiza la visualización de la palabra mostrando las letras adivinadas correctamente.
 
-#### - No: Continuar ingresando letras
+- ¿Está la palabra completa?: Se verifica si el jugador ha adivinado todas las letras de la palabra.
 
-#### 7.Mensajes finales y puntaje
+Sí:
 
-Mostrar mensaje final y calcular puntaje
-Victoria: GANASTE 😎
-Derrota: GAME OVER ☠️
+- Imprimir GANASTE de una manera cool 😎: Se muestra un mensaje de victoria.
 
-#### 8.Fin del juego
+- Calcular puntaje: Se calcula el puntaje obtenido por el jugador.
 
-FIN
+- No: Se vuelve a solicitar la entrada de letras.
 
-```py
-def adivinar_palabra (p_org=list, p_obs=list, palabra=str, letras_erroneas=list)->int:
+No:
 
-    i : int = 0
-   
-    while i < 12:
-        p_obs1 = " ".join(p_obs)
-        print (p_obs1)
-        a = (input("Escriba una letra: "))
-        if a in palabra:
-            for e in range (len(palabra)):
-                if a == p_org[e]:
-                    p_obs[e] = a
-        else:
-            i += 1
-        if p_org == p_obs:
-            break
-    print (p_obs1)
-    if p_org == p_obs:
-        resultado = 1
-    else:
-        resultado = 0
+Actualizar dibujo de ahorcado: Se incrementa el estado del ahorcado y se agrega la letra a la lista de errores.
 
-    return resultado
+¿Está el dibujo terminado?: Se verifica si el dibujo del ahorcado ha llegado a su final.
+
+Sí:
+
+- Imprimir ☠️ GAME OVER ☠️: Se muestra un mensaje de derrota.
+- Se calcula el puntaje.
+  
+No: 
+Se vuelve a solicitar la entrada de letras.
+
+### 8. Final del juego
+
+FIN: Se concluye el juego.
 
 
-if __name__ == "__main__":
-    # Palabra para jugar
-    palabra = input("Ingrese la palabra en minúsculas para jugar: ")
-    #Listas para la función
-    p_org = []
-    p_obs = []
-    letras_erroneas = []
-    #Asignación de elementos contenidos en listas
-    for i in range (len(palabra)):
-        p_org.append (palabra[i])
-        p_obs.append ("__")
 
-resultado = adivinar_palabra(p_org, p_obs, palabra)
-
-
-if resultado == 1:
-    print ("GANASTE")
-else:
-    print("GAME OVER")
-```
-cosas faltantes:
-tiempo
-lista de letras erroneas que se ingresen
-puntaje
-
-#### ANEXOS AL CODIGO
+## CODIGO DEL AHORCADO.PY
 
 ```py
-def adivinar_palabra(p_org=list, p_obs=list, palabra=str, letras_erroneas=list) -> int:
-    i: int = 0
-    puntaje: int = 100  # Puntaje inicial
+import random
+import time
 
-    while i < 12:
-        p_obs1 = " ".join(p_obs)
-        print(p_obs1)
-        print(f"Intentos restantes: {12 - i}")
-        print(f"Letra(s) errónea(s): {', '.join(letras_erroneas)}")
+# Definir los niveles de dificultad
+DIFFICULTY_LEVELS = {
+    'fácil': 8,
+    'medio': 6,
+    'difícil': 4
+}
+
+# Dibujos del ahorcado en ASCII
+HANGMAN_PICS = [
+    '''
+     +---+
+     |   |
+         |
+         |
+         |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+         |
+         |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+     |   |
+         |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+    /|   |
+         |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+    /|\\  |
+         |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+    /|\\  |
+    /    |
+         |
+    =========''', '''
+     +---+
+     |   |
+     O   |
+    /|\\  |
+    / \\  |
+         |
+    ========='''
+]
+
+# Cargar palabras desde un archivo para diferentes idiomas
+def load_words(language):
+    try:
+        with open(f'words_{language}.txt', 'r', encoding='utf-8') as file:
+            return file.read().splitlines()
+    except FileNotFoundError:
+        print(f"Archivo words_{language}.txt no encontrado. Verifica que esté en la misma carpeta que el script.")
+        return []
+    except UnicodeDecodeError:
+        print(f"Error de codificación al leer el archivo words_{language}.txt. Asegúrate de que esté en UTF-8.")
+        return []
+
+# Seleccionar una palabra aleatoria
+def select_word(words):
+    return random.choice(words).lower()
+
+# Juego principal con cuenta regresiva y manejo de puntajes
+def play_game(word, max_attempts):
+    guessed = "_" * len(word)
+    attempts = 0
+    guessed_letters = []
+    score = 0
+    start_time = time.time()
+    
+    while attempts < max_attempts and "_" in guessed:
+        print(HANGMAN_PICS[attempts])
+        print(f"Palabra: {guessed}")
+        print(f"Letras adivinadas: {', '.join(guessed_letters)}")
+        print(f"Intentos restantes: {max_attempts - attempts}")
         
-        a = input("Escriba una letra: ").lower()
+        # Tiempo restante (cuenta regresiva)
+        elapsed_time = time.time() - start_time
+        time_left = max(0, 50 - int(elapsed_time))
+        print(f"Tiempo restante: {time_left} segundos")
         
-        if a in palabra:
-            for e in range(len(palabra)):
-                if a == p_org[e]:
-                    p_obs[e] = a
-        else:
-            i += 1
-            if a not in letras_erroneas:
-                letras_erroneas.append(a)
-        
-        if p_org == p_obs:
+        if time_left == 0:
+            print("¡Se acabó el tiempo!")
             break
         
-        # Penaliza el puntaje por cada intento fallido
-        puntaje -= 10
-    
-    print(" ".join(p_obs))
-    
-    if p_org == p_obs:
-        resultado = 1
-    else:
-        resultado = 0
-
-    return resultado, puntaje
-
-if __name__ == "__main__":
-    # Palabra para jugar
-    palabra = input("Ingrese la palabra en minúsculas para jugar: ").lower()
-    
-    # Listas para la función
-    p_org = []
-    p_obs = []
-    letras_erroneas = []
-    
-    # Asignación de elementos contenidos en listas
-    for i in range(len(palabra)):
-        p_org.append(palabra[i])
-        p_obs.append("__")
-
-    resultado, puntaje = adivinar_palabra(p_org, p_obs, palabra, letras_erroneas)
-
-    if resultado == 1:
-        print("GANASTE")
-    else:
-        print("GAME OVER")
-
-    print(f"Tu puntaje es: {puntaje}")
-```
-Explicación de las modificaciones:
-
-Cuenta regresiva:
-Se muestra el número de intentos restantes en cada iteración del bucle while usando (print(f"Intentos restantes: {12 - i}").)
-
-Manejo de puntajes:
-Se inicializa una variable puntaje al principio del juego para llevar un registro del puntaje del jugador.
-El puntaje comienza en 100 y se penaliza con 10 puntos por cada intento fallido.
-Se actualiza el puntaje en cada iteración del bucle (while) si el jugador falla un intento.
-Se imprime el puntaje final al final del juego.
-
-OTRO ANEXO 
-
-```py
-def mostrar_horcas(intentos: int):
-    """Muestra la figura del ahorcado basada en el número de intentos fallidos."""
-    etapas = [
-        """
-         ------
-         |    |
-              |
-              |
-              |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-              |
-              |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-         |    |
-              |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-        /|    |
-              |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-        /|\\   |
-              |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-        /|\\   |
-        /     |
-              |
-        =========
-        """,
-        """
-         ------
-         |    |
-         O    |
-        /|\\   |
-        / \\   |
-              |
-        =========
-        """
-    ]
-    print(etapas[intentos])
-
-def adivinar_palabra(p_org=list, p_obs=list, palabra=str, letras_erroneas=list) -> int:
-    i: int = 0
-    puntaje: int = 100  # Puntaje inicial
-
-    while i < 6:  # Número total de intentos fallidos permitidos
-        mostrar_horcas(i)
+        guess = input("Adivina una letra: ").lower()
         
-        # Mostrar la línea con las letras adivinadas y los guiones bajos para las letras restantes
-        p_obs1 = " ".join(p_obs)
-        print(f"Línea actual: {p_obs1}")
+        if guess in guessed_letters:
+            print("Ya has adivinado esa letra. Intenta de nuevo.")
+            continue
         
-        print(f"Intentos restantes: {6 - i}")
-        print(f"Letra(s) errónea(s): {', '.join(letras_erroneas)}")
+        guessed_letters.append(guess)
         
-        a = input("Escriba una letra: ").lower()
-        
-        if a in palabra:
-            for e in range(len(palabra)):
-                if a == p_org[e]:
-                    p_obs[e] = a
+        if guess in word:
+            guessed = ''.join([guess if word[i] == guess else guessed[i] for i in range(len(word))])
+            print("¡Correcto!")
         else:
-            i += 1
-            if a not in letras_erroneas:
-                letras_erroneas.append(a)
-             puntaje -= 10 # Penaliza el puntaje por cada intento fallido
-
-        if p_org == p_obs:
-            break
+            attempts += 1
+            print("Incorrecto.")
     
-    mostrar_horcas(i)  # Muestra el estado final del ahorcado
-    
-    print(f"Línea final: {' '.join(p_obs)}")
-    
-    if p_org == p_obs:
-        resultado = 1
+    # Resultado al final del tiempo o intentos
+    if "_" not in guessed:
+        score += 10 * (max_attempts - attempts)  # Puntaje basado en los intentos restantes
+        print(f"¡Ganaste! La palabra era '{word}'. Tu puntaje: {score}")
     else:
-        resultado = 0
+        print(HANGMAN_PICS[-1])
+        print(f"¡Perdiste! La palabra era '{word}'.")
 
-    return resultado, puntaje
+    return score
+
+# Seleccionar nivel de dificultad
+def choose_difficulty():
+    print("Selecciona un nivel de dificultad:")
+    for level in DIFFICULTY_LEVELS:
+        print(f"- {level}")
+    
+    difficulty = input().lower()
+    return DIFFICULTY_LEVELS.get(difficulty, DIFFICULTY_LEVELS['fácil'])
+
+# Seleccionar idioma
+def choose_language():
+    languages = ['español', 'inglés', 'francés', 'alemán']
+    print("Selecciona un idioma:")
+    for lang in languages:
+        print(f"- {lang}")
+    
+    language = input().lower()
+    return language if language in languages else 'español'
+
+# Manejo de jugadores (multijugador)
+def multiplayer_game():
+    players = ['Jugador 1', 'Jugador 2']
+    scores = {player: 0 for player in players}
+    rounds = 3
+
+    language = choose_language()
+    words = load_words(language)
+    
+    if not words:
+        print("No se encontraron palabras para el idioma seleccionado. Finalizando juego.")
+        return
+
+    for _ in range(rounds):
+        for player in players:
+            print(f"\nTurno de {player}")
+            word = select_word(words)
+            max_attempts = choose_difficulty()
+            scores[player] += play_game(word, max_attempts)
+    
+    # Resultados finales
+    print("\nResultados finales:")
+    for player, score in scores.items():
+        print(f"{player}: {score} puntos")
+
+# Manejo de un jugador
+def single_player_game():
+    language = choose_language()
+    words = load_words(language)
+
+    if not words:
+        print("No se encontraron palabras para el idioma seleccionado. Finalizando juego.")
+        return
+
+    word = select_word(words)
+    max_attempts = choose_difficulty()
+    play_game(word, max_attempts)
+
+# Menú principal
+def main_menu():
+    print("¡Bienvenido al juego del Ahorcado!")
+    print("Selecciona una opción:")
+    print("1. Un jugador")
+    print("2. Dos jugadores")
+    
+    choice = input("Opción: ")
+    if choice == '1':
+        single_player_game()
+    elif choice == '2':
+        multiplayer_game()
+    else:
+        print("Opción no válida. Por favor, elige 1 o 2.")
 
 if __name__ == "__main__":
-    # Palabra para jugar (modificada a "computador")
-    palabra = "computador"
-    
-    # Listas para la función
-    p_org = []
-    p_obs = []
-    letras_erroneas = []
-    
-    # Asignación de elementos contenidos en listas
-    for i in range(len(palabra)):
-        p_org.append(palabra[i])
-        p_obs.append("__")
-
-    resultado, puntaje = adivinar_palabra(p_org, p_obs, palabra, letras_erroneas)
-
-    if resultado == 1:
-        print("GANASTE")
-    else:
-        print("GAME OVER")
-
-    print(f"Tu puntaje es: {puntaje}")
-```
-Cambios Realizados
-
-1. Incorporación del Ahorcado:
-
-Función mostrar_horcas: Se ha agregado una nueva función llamada mostrar_horcas para mostrar la representación gráfica del ahorcado según el número de intentos fallidos. Esta función imprime diferentes etapas del ahorcado (de la base hasta el muñeco completo). 
-
-2. Actualización de la Función adivinar_palabra:
-
-Número de Intentos: Se ha cambiado el número de intentos permitidos a 6, en lugar de 12.
-
-Puntaje: Se ha añadido un sistema de puntajes que disminuye con cada intento fallido.
-
-Visualización del Ahorcado y Línea de Palabra: La función ahora muestra la línea con los caracteres adivinados y el estado actual del ahorcado en cada iteración.
-
-3. Actualización en el Bloque Principal (__main__):
-
-Palabra Predeterminada: Se ha fijado la palabra a adivinar como "computador" en lugar de solicitarla al usuario.
-
-Puntaje: Se muestra el puntaje final al final del juego.
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = AhorcadoApp(root)
-    root.mainloop()
+    main_menu()
 
 ```
+### Dificultad:
+Elegir el nivel de dificultad adecuado puede hacer que la experiencia del juego sea más divertida y desafiante. Los jugadores pueden seleccionar el nivel que mejor se adapte a su habilidad y deseo de reto. Esto no solo mejora la jugabilidad, sino que también permite que todos, desde principiantes hasta expertos, disfruten del juego del Ahorcado.
+
+DIFFICULTY_LEVELS = {
+- 'fácil': 8 intentos
+- 'medio': 6 intentos
+- 'difícil': 4 intentos
+
+### Manejo de puntos:
+El manejo de puntos en el juego del Ahorcado está diseñado para recompensar a los jugadores según su desempeño. Cuando un jugador adivina la palabra antes de que se agoten los intentos, recibe puntos calculados con la fórmula: Puntaje = 10 × (Intentos Máximos - Intentos Usados). Esto significa que, por cada intento que le queda, suma 10 puntos. Por ejemplo, si un jugador tiene 6 intentos y usa solo 3, obtiene 30 puntos. Si no logra adivinar la palabra, no recibe puntos y se le informa que ha perdido. Este sistema incentiva a los jugadores a hacer elecciones estratégicas, fomentando la competitividad, especialmente en modo multijugador.
+
+### Manejo de tiempo:
+Durante cada ronda del juego, los jugadores cuentan con un tiempo limitado de 50 segundos para adivinar la palabra. Este tiempo se mide desde el inicio de la ronda y se actualiza constantemente. A medida que avanza el tiempo, el juego muestra el tiempo restante al jugador.
+
+
+![![Captura de pantalla 2024-09-24 174838](https://github.com/user-attachments/assets/b1e3a53a-1ea0-488b-819e-7c265d0c5753)
+
+![Captura de pantalla 2024-09-24 173644](https://github.com/user-attachments/assets/365381bb-720f-4e37-a8a1-b8efc7ef92fa)
+
+![Imagen de WhatsApp 2024-09-24 a las 17 46 38_28b0a3b3](https://github.com/user-attachments/assets/85f4c5de-609b-4cf9-a0b5-e6a215b3af26)
+
+![image](https://github.com/user-attachments/assets/ab5e1090-ec21-42f2-9707-74c473fb6f60)
+
+
+
+
+
