@@ -336,12 +336,20 @@ El manejo de puntos en el juego del Ahorcado está diseñado para recompensar a 
 ### Manejo de tiempo:
 Durante cada ronda del juego, los jugadores cuentan con un tiempo limitado de 50 segundos para adivinar la palabra. Este tiempo se mide desde el inicio de la ronda y se actualiza constantemente. A medida que avanza el tiempo, el juego muestra el tiempo restante al jugador.
 
+## Opciones de juego
 
 ![![Captura de pantalla 2024-09-24 174838](https://github.com/user-attachments/assets/b1e3a53a-1ea0-488b-819e-7c265d0c5753)
 
+## Inicio del juego
+
 ![Captura de pantalla 2024-09-24 173644](https://github.com/user-attachments/assets/365381bb-720f-4e37-a8a1-b8efc7ef92fa)
 
+## Ganaste- Perdiste
+
 ![Imagen de WhatsApp 2024-09-24 a las 17 46 38_28b0a3b3](https://github.com/user-attachments/assets/85f4c5de-609b-4cf9-a0b5-e6a215b3af26)
+
+
+## Multijugador
 
 ![image](https://github.com/user-attachments/assets/ab5e1090-ec21-42f2-9707-74c473fb6f60)
 
