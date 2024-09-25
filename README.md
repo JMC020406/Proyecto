@@ -23,7 +23,7 @@ graph TD;
   B-->|1 jugador|C{¿Qué dificultad jugará?}
   B-->|2 jugadores|E(Iniciar multijugador)
   
-  C-->|fácil|D(Sacar palabra de un archivo que se trae al codigo)
+  C-->|fácil|D(Sacar palabra de un archivo)
   C-->|medio|D
   C-->|difícil|D
   
@@ -31,7 +31,7 @@ graph TD;
   F-->|español|G(Sacar palabra en español)
   F-->|inglés|G(Sacar palabra en inglés)
   F-->|francés|G(Sacar palabra en francés)
-  F-->|alemán|G(Sacar palabra en alemán)
+  F-->|alemán|G(Sacar palabra de acuerdo al idioma seleccionado)
 
   G-->H(Ingresar letras por teclado)
   E-->H
