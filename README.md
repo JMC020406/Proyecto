@@ -1,4 +1,14 @@
 # Proyecto / Juego de Ahorcado
+
+### Intregrantes: 
+
+- Bryan Felipe Jaime Diaz
+
+- Jeyson Fernando Romero Fajardo
+
+![Captura de pantalla 2024-09-24 211503](https://github.com/user-attachments/assets/a8c3ea03-8b89-4258-be9e-88603a8d203a)
+
+
 ### Planeación código de juego de ahorcado
 Un juego de ahorcado es algo que cualquiera puede imaginarse que es divertido de hacer en un momento de aburrimiento, por lo cual nosotros los LegoCoders hemos decidido crear un programa el cual te permita jugar ahorcado tanto solo como con un amigo.
 
