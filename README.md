@@ -132,14 +132,14 @@ import random
 import time
 
 # Definir los niveles de dificultad
-DIFFICULTY_LEVELS = {
+NIVELES_DIFICULTAD = {
     'fácil': 8,
     'medio': 6,
     'difícil': 4
 }
 
 # Dibujos del ahorcado en ASCII
-HANGMAN_PICS = [
+DIBUJOS_AHORCADO = [
     '''
      +---+
      |   |
@@ -171,7 +171,7 @@ HANGMAN_PICS = [
     =========''', '''
      +---+
      |   |
-     O   |
+     O   |1
     /|\\  |
          |
          |
@@ -193,143 +193,144 @@ HANGMAN_PICS = [
 ]
 
 # Cargar palabras desde un archivo para diferentes idiomas
-def load_words(language):
+def cargar_palabras(idioma):
     try:
-        with open(f'words_{language}.txt', 'r', encoding='utf-8') as file:
-            return file.read().splitlines()
+        with open(f'palabras_{idioma}.txt', 'r', encoding='utf-8') as archivo:
+            return archivo.read().splitlines()
     except FileNotFoundError:
-        print(f"Archivo words_{language}.txt no encontrado. Verifica que esté en la misma carpeta que el script.")
+        print(f"Archivo palabras_{idioma}.txt no encontrado. Verifica que esté en la misma carpeta que el script.")
         return []
     except UnicodeDecodeError:
-        print(f"Error de codificación al leer el archivo words_{language}.txt. Asegúrate de que esté en UTF-8.")
+        print(f"Error de codificación al leer el archivo palabras_{idioma}.txt. Asegúrate de que esté en UTF-8.")
         return []
 
 # Seleccionar una palabra aleatoria
-def select_word(words):
-    return random.choice(words).lower()
+def seleccionar_palabra(palabras):
+    return random.choice(palabras).lower()
 
 # Juego principal con cuenta regresiva y manejo de puntajes
-def play_game(word, max_attempts):
-    guessed = "_" * len(word)
-    attempts = 0
-    guessed_letters = []
-    score = 0
-    start_time = time.time()
+def jugar(partida, max_intentos):
+    palabra_adivinada = "_" * len(partida)
+    intentos = 0
+    letras_adivinadas = []
+    puntaje = 0
+    tiempo_inicio = time.time()
     
-    while attempts < max_attempts and "_" in guessed:
-        print(HANGMAN_PICS[attempts])
-        print(f"Palabra: {guessed}")
-        print(f"Letras adivinadas: {', '.join(guessed_letters)}")
-        print(f"Intentos restantes: {max_attempts - attempts}")
+    while intentos < max_intentos and "_" in palabra_adivinada:
+        print(DIBUJOS_AHORCADO[intentos])
+        print(f"Palabra: {palabra_adivinada}")
+        print(f"Letras adivinadas: {', '.join(letras_adivinadas)}")
+        print(f"Intentos restantes: {max_intentos - intentos}")
         
         # Tiempo restante (cuenta regresiva)
-        elapsed_time = time.time() - start_time
-        time_left = max(0, 50 - int(elapsed_time))
-        print(f"Tiempo restante: {time_left} segundos")
+        tiempo_transcurrido = time.time() - tiempo_inicio
+        tiempo_restante = max(0, 50 - int(tiempo_transcurrido))
+        print(f"Tiempo restante: {tiempo_restante} segundos")
         
-        if time_left == 0:
+        if tiempo_restante == 0:
             print("¡Se acabó el tiempo!")
             break
         
-        guess = input("Adivina una letra: ").lower()
+        letra = input("Adivina una letra: ").lower()
         
-        if guess in guessed_letters:
+        if letra in letras_adivinadas:
             print("Ya has adivinado esa letra. Intenta de nuevo.")
             continue
         
-        guessed_letters.append(guess)
+        letras_adivinadas.append(letra)
         
-        if guess in word:
-            guessed = ''.join([guess if word[i] == guess else guessed[i] for i in range(len(word))])
+        if letra in partida:
+            palabra_adivinada = ''.join([letra if partida[i] == letra else palabra_adivinada[i] for i in range(len(partida))])
             print("¡Correcto!")
         else:
-            attempts += 1
+            intentos += 1
             print("Incorrecto.")
     
     # Resultado al final del tiempo o intentos
-    if "_" not in guessed:
-        score += 10 * (max_attempts - attempts)  # Puntaje basado en los intentos restantes
-        print(f"¡Ganaste! La palabra era '{word}'. Tu puntaje: {score}")
+    if "_" not in palabra_adivinada:
+        puntaje += 10 * (max_intentos - intentos)  # Puntaje basado en los intentos restantes
+        print(f"¡Ganaste! La palabra era '{partida}'. Tu puntaje: {puntaje}")
     else:
-        print(HANGMAN_PICS[-1])
-        print(f"¡Perdiste! La palabra era '{word}'.")
+        print(DIBUJOS_AHORCADO[-1])
+        print(f"¡Perdiste! La palabra era '{partida}'.")
 
-    return score
+    return puntaje
 
 # Seleccionar nivel de dificultad
-def choose_difficulty():
+def elegir_dificultad():
     print("Selecciona un nivel de dificultad:")
-    for level in DIFFICULTY_LEVELS:
-        print(f"- {level}")
+    for nivel in NIVELES_DIFICULTAD:
+        print(f"- {nivel}")
     
-    difficulty = input().lower()
-    return DIFFICULTY_LEVELS.get(difficulty, DIFFICULTY_LEVELS['fácil'])
+    dificultad = input().lower()
+    return NIVELES_DIFICULTAD.get(dificultad, NIVELES_DIFICULTAD['fácil'])
 
 # Seleccionar idioma
-def choose_language():
-    languages = ['español', 'inglés', 'francés', 'alemán']
+def elegir_idioma():
+    idiomas = ['español', 'ingles', 'frances', 'aleman']
     print("Selecciona un idioma:")
-    for lang in languages:
-        print(f"- {lang}")
+    for idioma in idiomas:
+        print(f"- {idioma}")
     
-    language = input().lower()
-    return language if language in languages else 'español'
+    idioma_seleccionado = input().lower()
+    return idioma_seleccionado if idioma_seleccionado in idiomas else 'español'
 
 # Manejo de jugadores (multijugador)
-def multiplayer_game():
-    players = ['Jugador 1', 'Jugador 2']
-    scores = {player: 0 for player in players}
-    rounds = 3
+def juego_multijugador():
+    jugadores = ['Jugador 1', 'Jugador 2']
+    puntajes = {jugador: 0 for jugador in jugadores}
+    rondas = 3
 
-    language = choose_language()
-    words = load_words(language)
+    idioma = elegir_idioma()
+    palabras = cargar_palabras(idioma)
     
-    if not words:
+    if not palabras:
         print("No se encontraron palabras para el idioma seleccionado. Finalizando juego.")
         return
 
-    for _ in range(rounds):
-        for player in players:
-            print(f"\nTurno de {player}")
-            word = select_word(words)
-            max_attempts = choose_difficulty()
-            scores[player] += play_game(word, max_attempts)
+    for _ in range(rondas):
+        for jugador in jugadores:
+            print(f"\nTurno de {jugador}")
+            palabra = seleccionar_palabra(palabras)
+            max_intentos = elegir_dificultad()
+            puntajes[jugador] += jugar(palabra, max_intentos)
     
     # Resultados finales
     print("\nResultados finales:")
-    for player, score in scores.items():
-        print(f"{player}: {score} puntos")
+    for jugador, puntaje in puntajes.items():
+        print(f"{jugador}: {puntaje} puntos")
 
 # Manejo de un jugador
-def single_player_game():
-    language = choose_language()
-    words = load_words(language)
+def juego_un_jugador():
+    idioma = elegir_idioma()
+    palabras = cargar_palabras(idioma)
 
-    if not words:
+    if not palabras:
         print("No se encontraron palabras para el idioma seleccionado. Finalizando juego.")
         return
 
-    word = select_word(words)
-    max_attempts = choose_difficulty()
-    play_game(word, max_attempts)
+    palabra = seleccionar_palabra(palabras)
+    max_intentos = elegir_dificultad()
+    jugar(palabra, max_intentos)
 
 # Menú principal
-def main_menu():
+def menu_principal():
     print("¡Bienvenido al juego del Ahorcado!")
     print("Selecciona una opción:")
     print("1. Un jugador")
     print("2. Dos jugadores")
     
-    choice = input("Opción: ")
-    if choice == '1':
-        single_player_game()
-    elif choice == '2':
-        multiplayer_game()
+    opcion = input("Opción: ")
+    if opcion == '1':
+        juego_un_jugador()
+    elif opcion == '2':
+        juego_multijugador()
     else:
         print("Opción no válida. Por favor, elige 1 o 2.")
 
 if __name__ == "__main__":
-    main_menu()
+    menu_principal()
+
 
 ```
 ### Dificultad:
